@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const {
+  LOG_LEVEL,
   NODE_ENV = 'production',
   LOG_DIR = './logs',
   DATABASE_NAME,
@@ -16,6 +17,7 @@ const {
 const PORT = parseInt(process.env.PORT);
 
 export { 
+  LOG_LEVEL,
   PORT,
   NODE_ENV, 
   LOG_DIR, 
