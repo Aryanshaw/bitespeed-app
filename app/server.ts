@@ -4,6 +4,7 @@ import logger from './loaders/logger';
 import { NODE_ENV, PORT } from './config';
 import baseRouter from './routes/base_route';
 import 'module-alias/register';
+import { initDb } from './loaders/db';
 
 const app = express();
 
@@ -16,7 +17,7 @@ export async function init() {
     console.log("starting the server")
     logger.info(`init in ${NODE_ENV} env`);
 
-    // await initDB();
+    await initDb();
     initRoutes();
     initServer();
   } catch (error) {
