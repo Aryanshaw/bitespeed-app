@@ -3,14 +3,25 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const {
-  MONGODB_URI,
-  LOG_LEVEL,
   NODE_ENV = 'production',
   LOG_DIR = './logs',
-  OPENAI_API_KEY,
-  OPENAI_ORG_ID,
+  DATABASE_NAME,
+  DATABASE_USER_NAME,
+  DATABASE_PASSWORD,
+  DATABASE_HOST,
+  DATABASE_PORT
+ 
 } = process.env;
 
 const PORT = parseInt(process.env.PORT);
 
-export { PORT, MONGODB_URI, LOG_LEVEL, NODE_ENV, LOG_DIR, OPENAI_API_KEY, OPENAI_ORG_ID };
+export { 
+  PORT,
+  NODE_ENV, 
+  LOG_DIR, 
+  DATABASE_NAME,
+  DATABASE_USER_NAME,
+  DATABASE_PASSWORD,
+  DATABASE_HOST,
+  DATABASE_PORT
+};

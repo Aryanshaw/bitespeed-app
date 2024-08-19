@@ -1,9 +1,10 @@
 import { Sequelize } from "sequelize";
 import logger from "./logger";
+import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USER_NAME } from "@/config";
 
-const sequelize = new Sequelize('deliveryplus', 'postgres', 'Hushl1234', {
-  host: 'delivery-plus.csqvweszj3he.ap-south-1.rds.amazonaws.com',
-  port: 5432,
+const sequelize = new Sequelize(DATABASE_NAME, DATABASE_USER_NAME, DATABASE_PASSWORD, {
+  host: DATABASE_HOST,
+  port: parseInt(DATABASE_PORT),
   dialect: 'postgres',
   logging: false, // Set to true if you want to see SQL queries in the console
   dialectOptions: {
