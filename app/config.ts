@@ -3,11 +3,12 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
+export const PORT: number = parseInt(process.env.PORT || '3000');
+
 export const {
   LOG_LEVEL,
   NODE_ENV = 'production',
   LOG_DIR = './logs',
-  PORT,
   DATABASE_URL,
   DB_HOST,
   DB_PORT,
