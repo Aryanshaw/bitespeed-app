@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import logger from './loaders/logger';
 import { NODE_ENV, PORT } from './config';
-import baseRouter from './routes/base_route';
 import 'module-alias/register';
 import { initDb } from './loaders/db';
 import contactRouter from './routes/contact';
@@ -37,8 +36,7 @@ function initRoutes() {
     res.send('OK');
   });
 
-  //define your routes here
-  app.use(`/api`, baseRouter);
+  //define routes here
   app.use(`/api`, contactRouter);
   app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message || err });
