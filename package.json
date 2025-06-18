@@ -1,5 +1,5 @@
 {
-  "name": "deliveryplus-backend",
+  "name": "biterspeed",
   "version": "1.0.0",
   "main": "app/server.ts",
   "scripts": {
