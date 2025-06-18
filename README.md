@@ -2,58 +2,140 @@
 
 ## 🚀 Overview
 
-This project is built to solve the **Bitespeed Identity Reconciliation** problem. It identifies and links multiple contact records for a user based on their phone number or email, ensuring a unified customer identity across orders — even when users use different contact info each time.
+This project implements the **Bitespeed Identity Reconciliation** system that identifies and consolidates customer contact information across multiple orders. The system intelligently links contact records based on email addresses and phone numbers, ensuring a unified customer identity even when users provide different contact details across transactions.
 
 ## 🛠️ Tech Stack
 
-- **Node.js** + **Express**
-- **Sequelize ORM**
-- **PostgreSQL** (Hosted on [Neon.tech](https://neon.tech))
-- **Typescript**
+- **Node.js** with **Express.js**
+- **TypeScript** for type safety
+- **Sequelize ORM** for database operations
+- **PostgreSQL** database (hosted on [Neon.tech](https://neon.tech))
 - **Deployed on Render**
 
 ---
 
-## 📬 API Endpoint
+## 🌐 Live Deployment
 
-### `POST {base_url}/api/identify`
+The application is deployed and accessible at:
 
-Identifies or creates a user contact based on incoming `email` and/or `phoneNumber`.
+**Primary API Endpoint:** `POST https://aryan-bitespeed.onrender.com/api/identify`
 
-### ✅ Request Body (JSON)
+**Alternative Frontend:** `https://biterspeed-identifier.netlify.app/identify`
+
+---
+
+## 📋 API Documentation
+
+### Endpoint: `/identify`
+
+**Method:** `POST`  
+**Content-Type:** `application/json` *(JSON Body required, not form-data)*
+
+### Request Format
+
 ```json
 {
-  "email": "doc@flux.com",
+  "email": "user@example.com",
   "phoneNumber": "1234567890"
 }
 ```
-### Sample Response
-```
+
+**Note:** Either `email` or `phoneNumber` (or both) must be provided.
+
+### Response Format
+
+```json
 {
   "contact": {
     "primaryContactId": 1,
-    "emails": ["doc@flux.com", "mcfly@hillvalley.edu"],
-    "phoneNumbers": ["1234567890"],
-    "secondaryContactIds": [23]
+    "emails": ["user@example.com", "alternate@example.com"],
+    "phoneNumbers": ["1234567890", "0987654321"],
+    "secondaryContactIds": [23, 45]
   }
 }
 ```
 
-### 🔎 Contact Linking Logic
-1. If no contact exists → create a new primary contact.
-2. If either phone/email matches existing contact → link new info as secondary.
-3. If both match different contacts → unify them under the older contact (by createdAt), make others secondary.
-4. Ensures de-duplication and consistent primary record.
+---
 
-The first time, you will need to run
+## 🔄 Identity Reconciliation Logic
+
+The system follows these rules for contact consolidation:
+
+1. **New Contact**: If no existing contact matches the provided email/phone → creates a new primary contact
+2. **Partial Match**: If email OR phone matches an existing contact → links the new information as a secondary contact
+3. **Multiple Matches**: If email and phone match different existing contacts → consolidates them under the older contact (by `createdAt`), converting others to secondary
+4. **Deduplication**: Ensures no duplicate emails or phone numbers in the response
+
+This approach maintains data integrity while providing a unified view of customer interactions.
+
+---
+
+## 🚀 Local Development Setup
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm
+- PostgreSQL database
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd bitspeed
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env` file with your database configuration:
+   ```env
+   DATABASE_URL=your_postgresql_connection_string
+   PORT=3000
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run start
+   ```
+
+The server uses **nodemon** for automatic reloading during development.
+
+---
+
+## 📁 Project Structure
 
 ```
-npm install
+bitspeed/
+├── app/
+│   ├── controllers/     # Request handlers
+│   ├── models/         # Database models
+│   ├── routes/         # API routes
+│   ├── helpers/        # Utility functions
+│   └── loaders/        # Database & logger setup
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
-Then just start the server with
+---
 
+## 🧪 Testing the API
+
+You can test the live API using curl:
+
+```bash
+curl -X POST https://aryan-bitespeed.onrender.com/api/identify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "phoneNumber": "1234567890"
+  }'
 ```
-npm start
-```
-It uses nodemon for livereloading
+
+---
+
+*This project was built as part of the Bitespeed backend engineering assessment.*
