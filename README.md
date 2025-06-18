@@ -20,13 +20,13 @@ The application is deployed and accessible at:
 
 **Primary API Endpoint:** `POST https://aryan-bitespeed.onrender.com/api/identify`
 
-**Alternative Frontend:** `https://biterspeed-identifier.netlify.app/identify`
+**Alternative Frontend:** `https://biterspeed-identifier.netlify.app`
 
 ---
 
 ## 📋 API Documentation
 
-### Endpoint: `/identify`
+### Endpoint: `/api/identify`
 
 **Method:** `POST`  
 **Content-Type:** `application/json` *(JSON Body required, not form-data)*
