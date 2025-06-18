@@ -4,7 +4,7 @@ import { DATABASE_URL } from "@/config";
 
 const sequelize = new Sequelize(DATABASE_URL, {
   dialect: 'postgres',
-  logging: false, // Set to true if you want to see SQL queries in the console
+  logging: false,
   dialectOptions: {
         ssl: {
             require: true,
@@ -14,6 +14,8 @@ const sequelize = new Sequelize(DATABASE_URL, {
 });
 
 export default sequelize;
+
+import Contact from "@/models/contact";
 
 export async function initDb(){
 
@@ -25,7 +27,12 @@ export async function initDb(){
     .catch((error) => {
         logger.error('Unable to connect to the database:', error);
     });
-    sequelize.sync({ force: false }).then(() => {
+    sequelize.sync({ force: false }).then(async () => {
         logger.info('Database & tables created!');
+        await Contact.sync({force: false}).then(()=>{
+            logger.info('Contact table created successfully');
+        }).catch((error)=>{
+            logger.error('Error creating Contact table:', error);
+        });
     });
 }
