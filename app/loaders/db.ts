@@ -1,8 +1,13 @@
 import { Sequelize } from "sequelize";
 import logger from "./logger";
-import { DATABASE_URL } from "@/config";
+import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USERNAME } from "@/config";
 
-const sequelize = new Sequelize(DATABASE_URL, {
+const sequelize = new Sequelize({
+  host: DB_HOST,
+  port: parseInt(DB_PORT),
+  password: DB_PASSWORD,
+  username: DB_USERNAME,
+  database: DB_DATABASE,
   dialect: 'postgres',
   logging: false,
   dialectOptions: {
