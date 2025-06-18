@@ -5,7 +5,7 @@ import { NODE_ENV, PORT } from './config';
 import baseRouter from './routes/base_route';
 import 'module-alias/register';
 import { initDb } from './loaders/db';
-
+import contactRouter from './routes/contact';
 const app = express();
 
 app.use(express.json());
@@ -33,12 +33,17 @@ function initServer() {
 }
 
 function initRoutes() {
-  app.get(`/health`, (req, res) => {
+  app.get(`/api/health`, (req, res) => {
     res.send('OK');
   });
 
   //define your routes here
-  app.use(`/`, baseRouter);
+  app.use(`/api`, baseRouter);
+  app.use(`/api`, contactRouter);
+  app.use((err, req, res, next) => {
+    res.status(500).json({ error: err.message || err });
+    next();
+  });
 }
 
 init();
